@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
-
-
 export const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -30,7 +28,7 @@ export const Register = () => {
                 <div className="md:w-4/5 sm:w-full">
                     {/* Contenedor del formulario */}
 
-                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-gray-500">Bienvenido(a)</h1>
+                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-red-800">SECCION DE REGISTRO</h1>
                     <small className="text-gray-400 block my-4 text-sm">Por favor ingresa tus datos</small> 
                     
                     <form onSubmit={handleSubmit(registro)}>
@@ -39,7 +37,8 @@ export const Register = () => {
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Nombre</label>
                             
-                            <input type="text" placeholder="Ingresa tu nombre" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
+                            <input type="text" placeholder="Ingresa tu nombre" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none 
+                            focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
                             {...register("nombre", {required: "El nombre es obligatorio"})}
                             />
                             {errors.nombre && <p className="text-red-800">{errors.nombre.message}</p>}
@@ -73,7 +72,7 @@ export const Register = () => {
 
                         {/* Campo para correo electrónico */}
                         <div className="mb-3">
-                            <label className="mb-2 block text-sm font-semibold">Correo electrónico</label>
+                            <label className="mb-2 block text-sm font-semibold">Correo institucional</label>
                             <input type="email" placeholder="Ingresa tu correo electrónico" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"  {...register("email", { required: "El correo electrónico es obligatorio" })}
                             />
                             {errors.email && <p className="text-red-800">{errors.email.message}</p>}
@@ -113,15 +112,15 @@ export const Register = () => {
 
                         {/* Botón para enviar el formulario */}
                         <div className="mb-3">
-                            <button className="bg-gray-500 text-slate-300 border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-gray-900 hover:text-white">Registrarse</button>
+                            <button className="bg-blue-900 text-slate-300 border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-red-900 hover:text-white">Registrarse</button>
                         </div>
 
                     </form>
 
                     {/* Enlace para iniciar sesión si ya tiene una cuenta */}
                     <div className="mt-3 text-sm flex justify-between items-center">
-                        <p>¿Ya posees una cuenta?</p>
-                        <Link to="/login" className="py-2 px-5 bg-gray-500 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900">Iniciar sesión</Link>
+                        <p>¿Ya tienes una cuenta?</p>
+                        <Link to="/login" className="py-2 px-5 bg-blue-900 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900">Iniciar sesión</Link>
                     </div>
 
                 </div>
@@ -129,7 +128,7 @@ export const Register = () => {
             </div>
 
             {/* Sección con imagen de fondo, solo visible en pantallas grandes */}
-            <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/public/images/dogregister.jpg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
+            <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/public/images/estudiantesEPN.jpg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
         </div>
     );
 };
