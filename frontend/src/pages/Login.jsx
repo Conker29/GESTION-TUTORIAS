@@ -8,14 +8,14 @@ const Login = () => {
     return (
         <div className="flex flex-col sm:flex-row h-screen">
             {/* Imagen de fondo */}
-            <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/public/images/doglogin.jpg')] 
+            <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/public/images/estudiantes.jpg')] 
             bg-no-repeat bg-cover bg-center sm:block hidden">
             </div>
 
             {/* Contenedor de formulario */}
             <div className="w-full sm:w-1/2 h-screen bg-white flex justify-center items-center">
                 <div className="md:w-4/5 sm:w-full">
-                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-gray-500">Bienvenido(a) de nuevo</h1>
+                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-red-800">Bienvenido(a) al sistema</h1>
                     <small className="text-gray-400 block my-4 text-sm">Por favor ingresa tus datos</small>
 
                     <form>
@@ -54,7 +54,8 @@ const Login = () => {
 
                         {/* Botón de iniciar sesión */}
                         <div className="my-4">
-                            <Link to="/dashboard" className="py-2 w-full block text-center bg-gray-500 text-slate-300 border rounded-xl hover:scale-100 duration-300 hover:bg-gray-900 hover:text-white">Iniciar sesión</Link>
+                            <Link to="/dashboard" className="py-2 w-full block text-center bg-blue-900 
+                            text-slate-300 border rounded-xl hover:scale-100 duration-300 hover:bg-gray-900 hover:text-white">Iniciar sesión</Link>
                         </div>
                     </form>
 
@@ -68,18 +69,18 @@ const Login = () => {
                     {/* Botón de inicio de sesión con Google */}
                     <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-black hover:text-white">
                         <img className="w-5 mr-2" src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google icon" />
-                        Sign in with Google
+                        Iniciar sesión con Google
                     </button>
 
                     {/* Olvidaste tu contraseña */}
                     <div className="mt-5 text-xs border-b-2 py-4">
-                        <Link to="/forgot/id" className="underline text-sm text-gray-400 hover:text-gray-900">¿Olvidaste tu contraseña?</Link>
+                        <Link to="/forgot/id" className="underline text-sm text-dark-400 hover:text-gray-900">¿Olvidaste tu contraseña?</Link>
                     </div>
 
                     {/* Enlaces para volver o registrarse */}
                     <div className="mt-3 text-sm flex justify-between items-center">
-                        <Link to="/" className="underline text-sm text-gray-400 hover:text-gray-900">Regresar</Link>
-                        <Link to="/register" className="py-2 px-5 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white">Registrarse</Link>
+                        <Link to="/" className="underline text-sm text-dark-400 hover:text-gray-900">Regresar</Link>
+                        <Link to="/register" className="py-2 px-5 bg-blue-900 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white">Registrarse</Link>
                     </div>
                 </div>
             </div>
