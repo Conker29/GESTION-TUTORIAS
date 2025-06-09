@@ -14,8 +14,6 @@ const Reset = () => {
     const [tokenback, setTokenBack] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-
-
     const changePassword = (data) => {
         const url = `${import.meta.env.VITE_BACKEND_URL}/nuevopassword/${token}`
         fetchDataBackend(url, data,'POST')
@@ -38,7 +36,7 @@ const Reset = () => {
         <div className="flex flex-col items-center justify-center h-screen">
             <ToastContainer />
             <h1 className="text-3xl font-semibold mb-2 text-center text-gray-500">
-                Bienvenido nuevamente
+                Bienvenido
             </h1>
             <small className="text-gray-400 block my-4 text-sm">
                 Por favor, ingrese los siguientes datos
