@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import routerDocente from "./routers/docente_routes.js";
 import routerEstudiante from "./routers/estudiante_routes.js";
+import routerAdministrador from "./routers/administrador_routes.js";
 
 //Inicializaciones
 const app = express()
