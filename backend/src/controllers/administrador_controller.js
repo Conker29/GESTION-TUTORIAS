@@ -1,4 +1,4 @@
-import Administrador from "../models/Administradors.js"
+import Administrador from "../models/administrador.js"
 import {sendMailToRegister, sendMailToRecoveryPassword} from "../config/nodemailer.js"
 
 const registroAdministrador = async (req,res)=>{
