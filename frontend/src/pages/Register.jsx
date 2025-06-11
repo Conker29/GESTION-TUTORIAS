@@ -110,6 +110,27 @@ export const Register = () => {
                             </div>
                         </div>
 
+                        {/* Campo para rol */}
+                        <div className="mb-3">
+                        <label className="mb-2 block text-sm font-semibold">Rol</label>
+                        <select
+                            className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
+                            {...register("rol", {
+                            required: "El rol es obligatorio",
+                            validate: (value) =>
+                                ["estudiante", "docente"].includes(value) || "Rol inválido",
+                            })}
+                        >
+                            <option value="">Selecciona tu rol</option>
+                            <option value="estudiante">Estudiante</option>
+                            <option value="docente">Docente</option>
+                            <option value="Administrador">Administrador</option>
+                        </select>
+                        {errors.rol && (
+                            <p className="text-red-800">{errors.rol.message}</p>
+                        )}
+                        </div>
+
                         {/* Botón para enviar el formulario */}
                         <div className="mb-3">
                             <button className="bg-blue-900 text-slate-300 border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-red-900 hover:text-white">Registrarse</button>
