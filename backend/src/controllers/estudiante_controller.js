@@ -1,0 +1,100 @@
+import Estudiante from "../models/estudiantes.js"
+import {sendMailToRegister, sendMailToRecoveryPassword} from "../config/nodemailer.js"
+
+const registroEstudiante = async (req,res)=>{
+    const {email,password} = req.body
+    if (Object.values(req.body).includes("")) return res.status(400).json({msg:"Todos los campos son obligatorios."})
+    const estudianteEmailBDD= await Estudiante.findOne({email})
+    if(estudianteEmailBDD) return res.status(400).json({msg:"Lo sentimos, el email ya se encuentra registrado"})
+    const nuevoEstudiante = new Estudiante(req.body)
+    nuevoEstudiante.password = await nuevoEstudiante.encrypPassword(password)
+    const token = nuevoEstudiante.crearToken()
+    await sendMailToRegister(email,token)
+    await nuevoEstudiante.save()
+    res.status(200).json({msg:"Revisa tu correo electrónico para confirmar tu cuenta"})
+}
+    
+
+const confirmarMailEstudiante = async (req,res)=>{
+    if(!(req.params.token)) return res.status(400).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    const EstudianteBDD = await Estudiante.findOne({token:req.params.token})
+    if(!EstudianteBDD?.token) return res.status(404).json({msg:"La cuenta ya ha sido confirmada"})
+    EstudianteBDD.token = null
+    EstudianteBDD.confirmEmail=true
+    await EstudianteBDD.save()
+    res.status(200).json({msg:"Token confirmado, ya puedes iniciar sesión"}) 
+}
+
+//Etapa 1
+const recuperarPasswordEstudiante = async(req, res) => {
+    //Primera validacion: Obtener el email 
+    const {email} = req.body
+    //2: Verificar que el correo electronico no este en blanco
+    if (Object.values(req.body).includes("")) return res.status(404).json({msg: "Todos los campos deben ser llenados obligatoriamente."})
+
+    //Verificar que exista el correo electronico en la base de datos
+    const EstudianteBDD = await Estudiante.findOne({email})
+
+    if (!EstudianteBDD) return res.status(404).json({msg: "Lo sentimos, el usuario no existe"})
+    //3
+    const token = EstudianteBDD.crearToken()
+    EstudianteBDD.token = token
+
+    //Enviar email
+    await sendMailToRecoveryPassword(email,token)
+    await EstudianteBDD.save()
+    //4
+    res.status(200).json({msg: "Revisa tu correo electrónico para restablecer tu contraseña."})
+}
+
+//Etapa 2
+const comprobarTokenPasswordEstudiante = async (req, res) => {
+    //1
+    const {token} = req.params
+    //2
+    const EstudianteBDD = await Estudiante. findOne({token})
+    if (EstudianteBDD.token !== token) return res.status (404).json({msg:"Lo sentimos, no se puede validar la cuenta"})
+    //3
+    await EstudianteBDD.save()
+    //4
+    
+    res.status(200).json({msg:"Token confirmado ya puedes crear tu password"})
+}
+
+//Etapa 3
+const crearNuevoPasswordEstudiante = async (req, res) => {
+    //1
+    const {password,confirmpassword} = req.body
+    //2
+    if (Object.values(req.body).includes("")) return res.status(404).json({msg: "Lo sentimos debes llenar todos los campos"})
+    
+    if (password!== confirmpassword) return res.status(404).json({msg: "Lo sentimos, los passwords no coinciden"})
+    
+    const EstudianteBDD = await Estudiante.findOne({token:req.params.token})
+
+    console.log(EstudianteBDD);
+    
+
+    if (EstudianteBDD.token !== req.params.token) return res.status(404).json({msg: "Lo sentimos no se puede validar su cuenta"})
+
+    //3
+    EstudianteBDD.token = null
+    EstudianteBDD.password = await EstudianteBDD.encrypPassword(password)
+    await EstudianteBDD.save()
+
+
+    //4
+
+
+    res.status(200).json({msg:"Ya puede iniciar sesion con su nueva contraseña."})
+}
+
+
+export {
+    registroEstudiante,
+    confirmarMailEstudiante,
+    recuperarPasswordEstudiante,
+    comprobarTokenPasswordEstudiante,
+    crearNuevoPasswordEstudiante
+}
+
