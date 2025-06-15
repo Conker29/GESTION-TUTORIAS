@@ -7,150 +7,139 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    
+    //Obtener el rol seleccionado dinámicamente
+    const rolSeleccionado = watch("rol");
+
     const registro = async (data) => {
         try {
-            const url = "http://localhost:3000/api/registro"
-            const respuesta = await axios.post(url,data)
-            toast.success(respuesta.data.msg)
+            const tipoRol = data.rol.toLowerCase();  // construir la URL con el rol
+            const url = `http://localhost:3000/api/${tipoRol}/registro`;
+            const respuesta = await axios.post(url, data);
+            toast.success(respuesta.data.msg);
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.msg)
+            console.log(error);
+            toast.error(error.response.data.msg);
         }
     }
+
     return (
         <div className="flex flex-col sm:flex-row h-screen">
             <ToastContainer />
-            {/* Sección de formulario de registro */}
-            <div className="w-full sm:w-1/2 h-screen bg-white flex justify-center items-center">
-
+            <div className="w-full sm:w-1/2 h-screen bg-white flex justify-center items-start py-10 overflow-auto">
                 <div className="md:w-4/5 sm:w-full">
-                    {/* Contenedor del formulario */}
+                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-red-800">SECCIÓN DE REGISTRO</h1>
+                    <small className="text-gray-400 block my-4 text-sm">Por favor ingresa tus datos</small>
 
-                    <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-red-800">SECCION DE REGISTRO</h1>
-                    <small className="text-gray-400 block my-4 text-sm">Por favor ingresa tus datos</small> 
-                    
                     <form onSubmit={handleSubmit(registro)}>
 
-                        {/* Campo para nombre */}
+                        {/* Rol */}
+                        <div className="mb-3">
+                            <label className="mb-2 block text-sm font-semibold">Rol * </label>
+                            <select {...register("rol", { required: "El rol es obligatorio" })} className="border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
+                                <option value="">Selecciona tu rol</option>
+                                <option value="estudiante">Estudiante</option>
+                                <option value="docente">Docente</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                            {errors.rol && <p className="text-red-800">{errors.rol.message}</p>}
+                        </div>
+
+                      {/* Nombre */}
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Nombre</label>
-                            
-                            <input type="text" placeholder="Ingresa tu nombre" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none 
-                            focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
-                            {...register("nombre", {required: "El nombre es obligatorio"})}
+                            <input
+                                type="text"
+                                placeholder="Ingresa tu nombre..."
+                                {...register("nombre", { required: "El nombre es obligatorio" })}
+                                className="w-full border border-black rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black"
                             />
                             {errors.nombre && <p className="text-red-800">{errors.nombre.message}</p>}
                         </div>
 
-                        {/* Campo para apellido */}
+                        {/* Apellido */}
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Apellido</label>
-                            <input type="text" placeholder="Ingresa tu apellido" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
-                             {...register("apellido", { required: "El apellido es obligatorio" })}
-                            />
+                            <input type="text"
+                            placeholder= "Ingresa tu apellido..." 
+                            {...register("apellido", { required: "El apellido es obligatorio" })} 
+                            className= "w-full border border-black rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black" />
                             {errors.apellido && <p className="text-red-800">{errors.apellido.message}</p>}
-                        
                         </div>
 
-                        {/* Campo para dirección */}
-                        <div className="mb-3">
-                            <label className="mb-2 block text-sm font-semibold">Dirección</label>
-                            <input type="text" placeholder="Ingresa tu dirección de domicilio" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"  {...register("direccion", { required: "La direccion es obligatorio" })}
-                            />
-                            {errors.direccion && <p className="text-red-800">{errors.direccion.message}</p>}
-                        </div>
-                        
-                        {/* Campo para celular */}
+                        {/* Dirección (solo aparece para el rol docente) */}
+                        {rolSeleccionado === "docente" && (
+                            <div className="mb-3">
+                                <label className="mb-2 block text-sm font-semibold">Oficina</label>
+                                <select {...register("direccion", { required: "La oficina es obligatoria" })} className= "border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black">
+                                    <option value="">Selecciona tu oficina</option>
+                                    <option value="Oficina 2 ESFOT">Oficina 2 ESFOT</option>
+                                    <option value="Oficina 3 ESFOT">Oficina 3 ESFOT</option>
+                                    <option value="Oficina 5 ESFOT">Oficina 5 ESFOT</option>
+                                    <option value="Oficina 6 ESFOT">Oficina 6 ESFOT</option> 
+                                </select>
+                                {errors.direccion && <p className="text-red-800">{errors.direccion.message}</p>}
+                            </div>
+                        )}
+
+
+                        {/* Celular */}
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Celular</label>
-                            <input type="number" placeholder="Ingresa tu celular" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" {...register("celular", { required: "El celular es obligatorio" })}
-                            />
+                            <input type="text"
+                            placeholder = "Ingresa tu número telefónico" {...register("celular", { required: "El celular es obligatorio" })} 
+                            className= "w-full border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"/>
                             {errors.celular && <p className="text-red-800">{errors.celular.message}</p>}
                         </div>
 
-                        {/* Campo para correo electrónico */}
+                        {/* Email */}
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Correo institucional</label>
-                            <input type="email" placeholder="Ingresa tu correo electrónico" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"  {...register("email", { required: "El correo electrónico es obligatorio" })}
-                            />
+                            <input type="email" 
+                            placeholder = "Ingresa tu correo electrónico..."{...register("email", { required: "El correo es obligatorio" })} 
+                            className= "w-full border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black" />
                             {errors.email && <p className="text-red-800">{errors.email.message}</p>}
-                    
                         </div>
 
-                        {/* Campo para contraseña */}
+                        {/* Contraseña */}
                         <div className="mb-3 relative">
                             <label className="mb-2 block text-sm font-semibold">Contraseña</label>
                             <div className="relative">
                                 <input
-                                    type={showPassword ? "text" : "password"} // Cambia el tipo del input entre 'text' y 'password' según el estado
-                                    placeholder="********************"
-                                    className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500 pr-10"
-                                 {...register("password", { required: "La contraseña es obligatorio" })}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Ingresa tu contraseña..."
+                                    {...register("password", { required: "La contraseña es obligatoria" })}
+                                    className="w-full border border-black rounded px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-black"
                                 />
-                                    {errors.password && <p className="text-red-800">{errors.password.message}</p>}
-                                    {/* Botón para mostrar/ocultar la contraseña */}
                                 <button
                                     type="button"
-                                    onClick={() => setShowPassword(!showPassword)} // Cambia el estado para mostrar/ocultar la contraseña
-                                    className="absolute top-2 right-3 text-gray-500 hover:text-gray-700"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-3 flex items-center text-sm text-gray-600 hover:text-gray-900"
                                 >
-                                    {/* Icono que cambia según el estado de la contraseña */}
-                                    {showPassword ? (
-                                        <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A9.956 9.956 0 0112 19c-4.418 0-8.165-2.928-9.53-7a10.005 10.005 0 0119.06 0 9.956 9.956 0 01-1.845 3.35M9.9 14.32a3 3 0 114.2-4.2m.5 3.5l3.8 3.8m-3.8-3.8L5.5 5.5" />
-                                        </svg>
-                                    ) : (
-                                        <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9.95 0a9.96 9.96 0 0119.9 0m-19.9 0a9.96 9.96 0 0119.9 0M3 3l18 18" />
-                                        </svg>
-                                    )}
+                                    {showPassword ? "Ocultar" : "Mostrar"}
                                 </button>
                             </div>
+                            {errors.password && <p className="text-red-800">{errors.password.message}</p>}
                         </div>
 
-                        {/* Campo para rol */}
-                        <div className="mb-3">
-                        <label className="mb-2 block text-sm font-semibold">Rol</label>
-                        <select
-                            className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
-                            {...register("rol", {
-                            required: "El rol es obligatorio",
-                            validate: (value) =>
-                                ["estudiante", "docente"].includes(value) || "Rol inválido",
-                            })}
-                        >
-                            <option value="">Selecciona tu rol</option>
-                            <option value="estudiante">Estudiante</option>
-                            <option value="docente">Docente</option>
-                            <option value="Administrador">Administrador</option>
-                        </select>
-                        {errors.rol && (
-                            <p className="text-red-800">{errors.rol.message}</p>
-                        )}
-                        </div>
-
-                        {/* Botón para enviar el formulario */}
+                        {/* Botón de envío */}
                         <div className="mb-3">
                             <button className="bg-blue-900 text-slate-300 border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-red-900 hover:text-white">Registrarse</button>
                         </div>
 
                     </form>
 
-                    {/* Enlace para iniciar sesión si ya tiene una cuenta */}
+                    {/* Enlace a login */}
                     <div className="mt-3 text-sm flex justify-between items-center">
                         <p>¿Ya tienes una cuenta?</p>
                         <Link to="/login" className="py-2 px-5 bg-blue-900 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900">Iniciar sesión</Link>
                     </div>
-
                 </div>
-
             </div>
 
-            {/* Sección con imagen de fondo, solo visible en pantallas grandes */}
+            {/* Imagen lateral */}
             <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/public/images/estudiantesEPN.jpg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
         </div>
     );
-};
+}
