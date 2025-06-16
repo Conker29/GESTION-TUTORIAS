@@ -9,9 +9,17 @@ export const Forgot = () => {
     const { fetchDataBackend } = useFetch()
 
     const sendMail = (data) => {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/recuperarpassword`
-        fetchDataBackend(url, data,'POST')
-    }
+        let url = `${import.meta.env.VITE_BACKEND_URL}`;
+        
+        if (data.rol === 'docente') url += 'docente/recuperarpassword';
+        if (data.rol === 'estudiante') url += 'estudiante/recuperarpassword';
+        if (data.rol === 'administrador') url += 'administrador/recuperarpassword';
+        
+        {/* SOLO ENVIAR EL CAMPO EMAIL AL BACKEND */}
+        const form = { email: data.email };
+    
+        fetchDataBackend(url, form, 'POST');
+    }     
 
     return (
         <div className="flex flex-col sm:flex-row h-screen">
@@ -27,13 +35,29 @@ export const Forgot = () => {
 
 
                     <form onSubmit={handleSubmit(sendMail)}>
-
+                        {/* CORREO */}
                         <div className="mb-1">
                             <label className="mb-3 block text-sm font-semibold">Correo electrónico</label>
                             <input type="email" placeholder="Ingresa un correo electrónico válido" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" 
                             {...register("email", { required: "El correo electrónico es obligatorio" })}
                             />
                             {errors.email && <p className="text-red-800">{errors.email.message}</p>}
+                        </div>
+
+                        {/* ROL */}
+                        <div className="mb-4">
+                            <label htmlFor="rol" className="block text-gray-700 font-semibold mb-2">Rol</label>
+                            <select
+                                id="rol"
+                                {...register('rol', { required: true })}
+                                className="w-full border border-black rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            >
+                                <option value="">Seleccione el rol</option>
+                                <option value="docente">Docente</option>
+                                <option value="estudiante">Estudiante</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                            {errors.rol && <p className="text-red-500 text-sm mt-1">El rol es obligatorio</p>}
                         </div>
 
                         <div className="mb-3">
