@@ -35,9 +35,9 @@ export const Home = () => {
 
             <main className='text-center py-6 px-8 bg-red-50  md:text-left md:flex justify-between items-center gap-10 md:py-1'>
                 <div className=''>
-                    <h1 className='font-lato font-extrabold text-amber-800 uppercase text-4xl my-4 md:text-6xl'>BIENVENIDO!</h1>
+                    <h1 className='font-lato font-extrabold text-amber-800 text-center uppercase text-4xl my-4 md:text-6xl'>BIENVENIDO!</h1>
 
-                    <p className='text-2xl my-6 font-sans'>Mediante esta plataforma, puedes agendar una tutoría con el docente de tu preferencia.</p>
+                    <p className='text-2xl my-6 text-center font-sans'>Mediante esta plataforma, puedes agendar una cita con tu tutor de acuerdo a su disponibilidad.</p>
                 </div>
                 <div className='hidden md:block'>
                     <img src={estudiantesEPN} alt="smart" />
