@@ -17,13 +17,13 @@ const sendMailToRegister = (userMail, token) => {
     const confirmationLink = `${process.env.URL_FRONTEND}confirm/${token}`;
 
     const mailOptions = {
-        from: 'emilio041114@gmail.com',
+        from: 'tutorias.esfot@gmail.com',
         to: userMail,
-        subject: "¡Listo para comenzar!",
+        subject: "Registro en la plataforma de tutorías",
         html: `
-            <p>Hola, haz clic <a href="${confirmationLink}">aquí</a> para confirmar tu cuenta.</p>
+            <p><a href="${confirmationLink}">aquí</a>Haz clic aquí para confirmar tu cuenta.</p>
             <hr>
-            <footer>Nosotros haremos lo posible por resolver tus dudas junto a los ingenieros.</footer>
+            <footer>2025 - Tutorias ESFOT - Todos los derechos reservados.</footer>
         `
     };
 
@@ -37,20 +37,25 @@ const sendMailToRegister = (userMail, token) => {
 };
 
 
-const sendMailToRecoveryPassword = async(userMail,token)=>{
+const sendMailToRecoveryPassword = async (userMail, token, tipo) => {
     let info = await transporter.sendMail({
-    from: 'emilio041114@gmail.com',
-    to: userMail,
-    subject: "Correo para restablecer tu contraseña",
-    html: `
-    <h1>GESTOR DE TUTORIAS - 😁😁</h1>
-    <hr>
-    <a href=${process.env.URL_FRONTEND}reset/${token}>Clic para reestablecer tu contraseña</a>
-    <hr>
-    <footer>Bienvenido</footer>
-    `
+        from: 'tutorias.esfot@gmail.com',
+        to: userMail,
+        subject: "Correo para restablecer tu contraseña",
+        html: `
+            <h1>PLATAFORMA DE TUTORIAS ACADEMICAS</h1>
+            <hr>
+            <a href="${process.env.URL_FRONTEND}reset/${tipo}/${token}">Haz clic aquí para restablecer tu contraseña</a>
+            <hr>
+            <footer>2025 - Tutorias ESFOT - Todos los derechos reservados.</footer>
+        `
     });
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
+}
+
+export {
+    sendMailToRegister,
+    sendMailToRecoveryPassword
 }
 
 
