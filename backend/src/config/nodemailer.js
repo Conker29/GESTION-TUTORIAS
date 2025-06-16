@@ -57,10 +57,3 @@ export {
     sendMailToRegister,
     sendMailToRecoveryPassword
 }
-
-
-
-export {
-    sendMailToRegister,
-    sendMailToRecoveryPassword
-}
