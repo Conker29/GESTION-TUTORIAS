@@ -25,19 +25,19 @@ export const Home = () => {
                     </li>
                 </ul>
                 <ul className='flex gap-5 justify-center my-4 flex-wrap'>
-                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Home</a></li>
+                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Inicio</a></li>
                     <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Nosotros</a></li>
-                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Services</a></li>                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Contact</a></li>
+                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Servicios</a></li>
+                    <li><a href="#" className='font-bold hover:text-amber-700 hover:underline'>Contacto</a></li>
+                    <li><Link to="/login" href="#" className='font-bold px-3 py-1 border border-amber-700 rounded-md hover:bg-amber-700 hover:text-white transition-colors duration-200'>Iniciar sesión</Link></li>
                 </ul>
             </header>
 
             <main className='text-center py-6 px-8 bg-red-50  md:text-left md:flex justify-between items-center gap-10 md:py-1'>
                 <div className=''>
-                    <h1 className='font-lato font-extrabold text-amber-800 uppercase text-4xl my-4 md:text-6xl'>TUTORIAS ACADEMICAS</h1>
+                    <h1 className='font-lato font-extrabold text-amber-800 uppercase text-4xl my-4 md:text-6xl'>BIENVENIDO!</h1>
 
-                    <p className='text-2xl my-6 font-sans'>Agenda una cita con tu docente aquí.</p>
-
-                    <Link to="/login" href="#" className='block bg-amber-800 w-40 py-2 mx-auto text-white rounded-2xl text-center sm:mx-0 hover:bg-amber-700'>Empezar</Link>
+                    <p className='text-2xl my-6 font-sans'>Mediante esta plataforma, puedes agendar una tutoría con el docente de tu preferencia.</p>
                 </div>
                 <div className='hidden md:block'>
                     <img src={estudiantesEPN} alt="smart" />
@@ -59,15 +59,15 @@ export const Home = () => {
                     </div>
 
                     <div className='px-10 sm:w-1/2'>
-                        <p className='my-4'>SmartVET is the first software on the market that includes
+                        <p className='my-4'>Mediante la plataforma puedes:
                         </p>
                         <ul className='space-y-4'>
                             <li>
-                                <MdDashboard className='inline text-2xl mr-2' />Administrative Dashboard
+                                <MdDashboard className='inline text-2xl mr-2' />Agendar una cita con tu docente de acuerdo a su disponibilidad.
                             </li>
                             <li>
                                 <FaRobot className='inline text-2xl mr-2' />
-                                Artificial intelligence
+                                Consultar dudas con tus docentes.
                             </li>
                             <li>
                                 <BsCashCoin className='inline text-2xl mr-2' />
@@ -148,31 +148,24 @@ export const Home = () => {
 
 
             <footer className='text-center bg-red-50 p-6 sm:px-20 sm:py-10 mt-20 rounded-tr-3xl rounded-tl-3xl space-y-8'>
-            <h3 className='font-lato font-extrabold text-amber-800 uppercase text-3xl my-4 md:text-3xl'>CONTACTANOS</h3>
-                <div className='flex justify-between items-center'>
-                <li><img src={logoESFOT} alt="logo" width={150} height={75} /></li>
-                    <div className='text-left'>
-                    <p className='font-bold my-2'>Av. Ladrón de Guevara E11-253, Quito 170143</p>
-                        <p className='font-bold my-2'>Email: tutorias.esfot@epn.edu.ec</p>
-                    </div>
-                    <div className='flex-1 sm:max-w-1/2'>
-                        <form action="#" className='w-full p-4'>
-                            <fieldset className='border-2 border-amber-900 p-4 rounded-sm '>
-                                <legend className='bg-amber-950 w-full text-left text-white pl-2 py-2'>Envianos un correo electronico</legend>
-                                <div className='flex justify-between gap-4'>
-                                    <input type="email" placeholder="Enter your email" className='sm:flex-1 border border-gray-300 rounded-md focus:outline-none px-2' />
-                                    <button className='flex-1 sm:max-w-40 border bg-amber-950 p-1 rounded-lg text-white'>Send</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+    <h3 className='font-lato font-extrabold text-amber-800 uppercase text-3xl my-4 md:text-3xl'>CONTACTANOS</h3>
+    {/* Contenedor principal para la imagen y el texto */}
+    <div className='flex items-center justify-center flex-wrap gap-4'> 
+        {/* Contenedor del logo */}
+        <div>
+            <li><img src={logoESFOT} alt="logo" width={170} height={75} /></li>
+        </div>
+        {/* Contenedor del texto */}
+        <div className='text-left'>
+            <p className='font-bold my-2'>Av. Ladrón de Guevara E11-253, Quito 170143</p>
+            <p className='font-bold my-2'>Email: tutorias.esfot@epn.edu.ec</p>
+        </div>
+    </div>
 
-                <hr className='border-1 border-amber-800' />
+    <hr className='border-1 border-amber-800' />
 
-        <div className='text-center'> {/* Centrar el contenido */}
-
-        <div className='text-3xl font-extrabold text-amber-800 mb-4'>REDES SOCIALES</div> {/* Añadí mb-4 para un poco de espacio */}
+    <div className='text-center'>
+        <div className='text-3xl font-extrabold text-amber-800 mb-4'>REDES SOCIALES</div>
         <ul className='flex gap-4 justify-center'>
             <li>
                 <a href="https://www.facebook.com/profile.php?id=100063704537871&fref=ts#" target="_blank" rel="noopener noreferrer">
